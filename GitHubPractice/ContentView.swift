@@ -1,28 +1,61 @@
-//
-//  ContentView.swift
-//  GitHubPractice
-//
-//  Created by Scholar on 7/14/25.
-//
-
 import SwiftUI
 
 struct ContentView: View {
+    @State private var tasks: [String] = []
+    @State private var newTask: String = ""
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-            Text("Change 1")
-            Text("Lily's Change Two")
-            Text("Anudhka Change 3")
-            Text("Eunah Change 4")
+        ZStack {
+            Color.black
+                .ignoresSafeArea()
+            
+            VStack(alignment: .leading, spacing: 20) {
+                HStack {
+                    Text("To-Do List")
+                        .font(.system(size: 40, weight: .bold))
+                        .foregroundColor(.white)
+                    Spacer()
+                }
+
+                HStack {
+                    TextField("Enter new task", text: $newTask)
+                        .padding()
+                        .background(Color(.darkGray))
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                    
+                    Button(action: {
+                        if !newTask.trimmingCharacters(in: .whitespaces).isEmpty {
+                            tasks.append(newTask)
+                            newTask = ""
+                        }
+                    }) {
+                        Image(systemName: "plus.circle.fill")
+                            .font(.system(size: 30))
+                            .foregroundColor(.green)
+                    }
+                }
+
+                List {
+                    ForEach(tasks, id: \.self) { task in
+                        Text(task)
+                            .foregroundColor(.white)
+                            .listRowBackground(Color.black)
+                    }
+                    .onDelete(perform: deleteTask)
+                }
+                .listStyle(PlainListStyle())
+            }
+            .padding()
         }
-        .padding()
+    }
+
+    func deleteTask(at offsets: IndexSet) {
+        tasks.remove(atOffsets: offsets)
     }
 }
 
 #Preview {
     ContentView()
 }
+
