@@ -3,22 +3,34 @@ import SwiftUI
 struct ScheduledListView: View {
     @EnvironmentObject var viewModel: SessionViewModel
 
+
     var body: some View {
-        VStack {
-            if viewModel.scheduledSessions.isEmpty {
-                Text("No scheduled sessions yet.")
-                    .foregroundColor(.gray)
-            } else {
-                List {
-                    ForEach(viewModel.scheduledSessions) { session in
-                        Text("\(formattedHour(session.hour)) on \(formattedDate(session.date))")
+      
+        ZStack{
+            Color(red:225/255, green:239/255, blue:252/255)
+            .ignoresSafeArea()
+            VStack {
+                if viewModel.scheduledSessions.isEmpty {
+                    Text("No scheduled sessions yet.")
+                        .foregroundColor(.gray)
+                } else {
+                    List {
+                        ForEach(viewModel.scheduledSessions) { session in
+                            Text("\(formattedHour(session.hour)) on \(formattedDate(session.date))")
+                        }
+                        .onDelete(perform: viewModel.deleteSession)
                     }
-                    .onDelete(perform: viewModel.deleteSession)
+                    .scrollContentBackground(.hidden)
+                    .background(Color.clear)
+
                 }
             }
+            .navigationTitle("Scheduled Sessions")
         }
-        .navigationTitle("Scheduled Sessions")
-    }
+     
+    
+            }
+
 
     func formattedDate(_ date: Date) -> String {
         let formatter = DateFormatter()
@@ -35,4 +47,6 @@ struct ScheduledListView: View {
     }
 }
 
+//Color(red:225/255, green:239/255, blue:252/255)
+  //  .ignoresSafeArea()
 

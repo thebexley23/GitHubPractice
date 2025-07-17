@@ -23,8 +23,9 @@ struct ScheduleView: View {
                 Text(formattedDate(date))
                     .font(.title2)
                     .fontWeight(.medium)
-
-                Text("Choose a Time")
+                
+// where we are changing the display of the time
+                Text("Time Chosen: \(selectedHour.map { formattedHour($0) } ?? "None")")
                     .font(.headline)
                     .padding(.top)
 
@@ -32,8 +33,7 @@ struct ScheduleView: View {
                     VStack(spacing: 12) {
                         ForEach(hours, id: \.self) { hour in
                             Button(action: {
-                                selectedHour = hour
-                            }) {
+                                selectedHour = hour                            }) {
                                 Text(formattedHour(hour))
                                     .frame(maxWidth: .infinity)
                                     .padding()
@@ -66,7 +66,7 @@ struct ScheduleView: View {
                 Spacer()
             }
             .padding()
-            .background(Color(red: 153/255, green: 224/255, blue: 168/255))
+            .background(Color(red:225/255, green:239/255, blue:252/255))
             .navigationTitle("")
 
             // Popup overlay
@@ -112,6 +112,7 @@ struct ScheduleView: View {
         return formatter.string(from: date)
     }
 }
+
 
 
 #Preview {

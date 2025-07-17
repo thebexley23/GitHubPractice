@@ -9,14 +9,8 @@ struct CalendarView: View {
     
     var body: some View {
         NavigationStack(path: $path) {
-            VStack(spacing: 20) {
-                HStack {
-                    Text("Schedule LockIn Session")
-                        .font(.title)
-                        .fontWeight(.semibold)
-                    Spacer()
-                }
-                Spacer()
+            VStack(spacing: 20.0) {
+
                 DatePicker("", selection: $selectedDate, in: Date()..., displayedComponents: [.date])
                     .datePickerStyle(.graphical)
                     .padding()
@@ -40,9 +34,8 @@ struct CalendarView: View {
                 Spacer()
             }
             .padding()
-            .background(Color(red: 153/255, green: 224/255, blue: 168/255))
             .navigationTitle("Home")
-            .navigationBarHidden(true)
+            .background(Color(.white))
             .navigationDestination(for: Date.self) { date in
                 ScheduleView(date: date)
                     .environmentObject(viewModel)
@@ -54,6 +47,8 @@ struct CalendarView: View {
                 }
             }
         }
+
+
     }
 }
 
